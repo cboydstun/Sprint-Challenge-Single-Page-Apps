@@ -27,13 +27,76 @@ main {
 .grid-view div.card.ui {
   margin: 1.25rem;
 }
-/*
+
 .main-img {
   display: block;
   border-radius: 100%;
   margin: 0 auto;
-} */
+} 
 
 header h1 {
   text-align: center;
+}
+
+.card {
+  border: 1px solid rgb(197, 195, 195);
+  margin: 15px auto;
+  width: 40%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 2px 1px 10px -1px rgb(163, 158, 163);
+}
+
+.card img {
+  border-radius: 10px 10px 0px 0px;
+  width: 100%;
+}
+
+.card h2 {
+  font-size: 23px;
+}
+
+.card-text {
+  padding: 0px 13px;
+  margin-top: 15px;
+}
+
+.card-text .status {
+  color: rgb(158, 155, 155);
+  margin-top: -15px;
+}
+
+.card-text p {
+  font-size: 15px;
+  margin: 2px;
+}
+
+.episode {
+  border-top: 1px solid rgb(165, 161, 161);
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  margin: 10px 0px 15px 0px;
+  color: rgb(163, 158, 163);
+  padding-left: 13px;
+  font-size: 13px;
+}
+
+.location-card {
+  border: 1px solid black;
+  width: 40%;
+  margin: 15px auto;
+  padding: 10px;
+  height: auto;
+}
+
+.menu-item{
+  background-color: red;
+  font-size: 100px;
+}
+
+.wrapped{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
 }
