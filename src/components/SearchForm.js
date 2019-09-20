@@ -1,48 +1,47 @@
-import React, { Component } from 'react'
-import axios from 'axios'
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import { withFormik, Form, Field } from "formik";
+import * as Yup from "yup";
+import CharacterCard from "./CharacterCard";
 
-const { API_KEY } = process.env
-const API_URL = 'https://rickandmortyapi.com/api/character/'
+function SearchForm({ status, values }) {
+  const [characters, setCharacters] = useState(null);
+  useEffect(() => {
+    status && setCharacters(status);
+  }, [status]);
 
-class Search extends Component {
-  state = {
-    query: '',
-    results: []
-  }
+  return (
+    <section className="search-form">
+      <Form>
+        <Field type="text" name="name" placeholder="Search" />
 
-  getInfo = () => {
-    axios.get(`${API_URL}?api_key=${API_KEY}&prefix=${this.state.query}&limit=7`)
-      .then(({ data }) => {
-        this.setState({
-          results: data.data                              
-        })
-      })
-  }
+        <button type="submit">Search</button>
+      </Form>
 
-  handleInputChange = () => {
-    this.setState({
-      query: this.search.value
-    }, () => {
-      if (this.state.query && this.state.query.length > 1) {
-        if (this.state.query.length % 2 === 0) {
-          this.getInfo()
-        }
-      } 
-    })
-  }
-
-  render() {
-    return (
-      <form>
-        <input
-          placeholder="Search for..."
-          ref={input => this.search = input}
-          onChange={this.handleInputChange}
-        />
-        <p>{this.state.query}</p>
-      </form>
-    )
-  }
+      {characters
+        ? characters.results.map(el => <CharacterCard data={el} />)
+        : null}
+    </section>
+  );
 }
 
-export default Search
+const FormikSearchForm = withFormik({
+  mapPropsToValues({ name }) {
+    return {
+      name: name || ""
+    };
+  },
+  validationSchema: Yup.object().shape({
+    name: Yup.string().required("")
+  }),
+  handleSubmit(values, { setStatus }) {
+    axios
+      .get(`https://rickandmortyapi.com/api/character/?name=${values.name}`)
+      .then(res => {
+        setStatus(res.data);
+      })
+      .catch(err => console.log(err.response));
+  }
+})(SearchForm);
+
+export default FormikSearchForm;

@@ -1,26 +1,55 @@
 import React, { useEffect, useState } from "react";
-import CharacterCard from './CharacterCard';
-import axios from 'axios';
+import axios from "axios";
+import CharacterCard from "./CharacterCard";
+import FilterForm from "./FilterForm";
+import { makeStyles } from "@material-ui/core/styles";
+import List from "@material-ui/core/List";
+import Divider from "@material-ui/core/Divider";
+
+const useStyles = makeStyles(theme => ({
+  root: {
+    width: "100%",
+    maxWidth: 500,
+    backgroundColor: theme.palette.background.paper
+  }
+}));
 
 export default function CharacterList() {
-  const [charList, setCharList] = useState();
+  // TODO: Add useState to track data from useEffect
+  const [currentPage, setCurrentPage] = useState(
+    "https://rickandmortyapi.com/api/character/"
+  );
+  const [characterList, setCharacterList] = useState(null);
+  const [characterArr, setCharacterArr] = useState([]);
+  const classes = useStyles();
 
   useEffect(() => {
-    axios.get('https://rickandmortyapi.com/api/character/')
-      .then(res =>{
-        setCharList(res.data.results)
+    axios
+      .get(`${currentPage}`)
+      .then(res => {
+        setCharacterList(res.data);
+        setCharacterArr(res.data.results);
       })
-      .catch(err => console.log('Error: ', err));
-
-  }, []);
-
-  if (!charList) {
-    return <p>Loading data...</p>
-  }
+      .catch(err => console.error(err));
+  }, [currentPage]);
 
   return (
-    <section className="character-list grid-view">
-      {charList.map((char, index) => <CharacterCard char={char} key={index}/>)}
-    </section>
+    <List className="classes.root">
+      <FilterForm
+        characterList={characterList}
+        setCharacterArr={setCharacterArr}
+      />
+      {characterArr ? (
+        characterArr.map(el => <CharacterCard data={el} />)
+      ) : (
+        <h1>Loading Characters....</h1>
+      )}
+      <button onClick={() => setCurrentPage(characterList.info.prev)}>
+        Prev Page
+      </button>
+      <button onClick={() => setCurrentPage(characterList.info.next)}>
+        Next Page
+      </button>
+    </List>
   );
 }

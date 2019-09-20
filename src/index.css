@@ -94,3 +94,9 @@ header h1 {
   background-color: red;
   font-size: 100px;
 }
+
+.wrapped{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
