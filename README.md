@@ -27,6 +27,8 @@ Demonstrate your understanding of this Sprint's concepts by answering the follow
 
 - [ ]  Explain benefit(s) using `client-side routing`?
 
+    Client-side routing loads everything first and then changes what is needed instead reloading the entire document.
+
 > Answer:
 
 ## Project Set Up
