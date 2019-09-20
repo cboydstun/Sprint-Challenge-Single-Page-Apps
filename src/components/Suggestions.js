@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import axios from 'axios'
+import Suggestions from 'components/Suggestions'
 
 const { API_KEY } = process.env
 const API_URL = 'https://rickandmortyapi.com/api/character/'
@@ -14,7 +15,7 @@ class Search extends Component {
     axios.get(`${API_URL}?api_key=${API_KEY}&prefix=${this.state.query}&limit=7`)
       .then(({ data }) => {
         this.setState({
-          results: data.data                              
+          results: data.data
         })
       })
   }
@@ -27,7 +28,8 @@ class Search extends Component {
         if (this.state.query.length % 2 === 0) {
           this.getInfo()
         }
-      } 
+      } else if (!this.state.query) {
+      }
     })
   }
 
@@ -39,7 +41,7 @@ class Search extends Component {
           ref={input => this.search = input}
           onChange={this.handleInputChange}
         />
-        <p>{this.state.query}</p>
+        <Suggestions results={this.state.results} />
       </form>
     )
   }

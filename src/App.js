@@ -6,11 +6,12 @@ import WelcomePage from './components/WelcomePage';
 import CharacterList from './components/CharacterList';
 import LocationList from './components/LocationsList';
 import EpisodeList from './components/EpisodeList';
+import Search from './components/SearchForm';
 
 export default function App() {
   return (
     <main>
-      <Header />
+      <Header /> <Search />
       <Route path="/" render={props => <TabNav {...props} />}/>
       <Route path="/homepage" component={WelcomePage}/>
       <Route path="/characters" component={CharacterList}/>
